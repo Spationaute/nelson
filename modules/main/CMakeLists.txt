@@ -273,7 +273,31 @@ endif()
 install(TARGETS nelson-cli-exec RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 if(NOT WITHOUT_GUI_MODULE)
   install(TARGETS nelson-adv-cli-exec RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-  install(TARGETS nelson-gui-exec RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+  install(TARGETS nelson-gui-exec RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+  if(APPLE)
+    set(MACOS_ICONS  ${PROJECT_SOURCE_DIR}/resources/macos/logo.icns)
+    target_sources(nelson-gui-exec PUBLIC ${MACOS_ICONS})
+    set_target_properties(nelson-gui-exec PROPERTIES
+        OUTPUT_NAME "Nelson"
+        MACOSX_BUNDLE TRUE
+        INSTALL_RPATH @executable_path/../Frameworks
+        BUILD_WITH_INSTALL_RPATH TRUE
+        RESOURCE ${MACOS_ICONS}
+        MACOSX_BUNDLE_INFO_PLIST
+        "${PROJECT_SOURCE_DIR}/resources/macos/Info.plist"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${BUILD_VERSION}"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "org.nelson.nelson"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "org.nelson.nelson"
+        MACOSX_BUNDLE_COPYRIGHT "(c) 2024 Nelson"
+    )
+    add_custom_command(TARGET nelson-gui-exec POST_BUILD
+            COMMAND rsync -a ${PROJECT_SOURCE_DIR}/bin/macOS/
+            $<TARGET_BUNDLE_DIR:nelson-gui-exec>/Contents/Frameworks
+            COMMENT "Copying all SFML frameworks into the app bundle"
+    )
+  endif()
 endif()
 if(NOT WITHOUT_SIO_CLIENT_MODULE)
   install(TARGETS nelson-sio-cli-exec RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

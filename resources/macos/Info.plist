@@ -1,0 +1,33 @@
+<!-- src/assets/manifests/Info.plist -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">C
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleIconFile</key>
+    <string>logo</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>NSMainStoryboardFile</key>
+    <string>Main</string>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>LSEnvironment</key>
+     <dict>
+         <key>NLS_LIBRARY_PATH</key>
+         <string>Frameworks</string>
+     </dict>
+    <key>CFBundleExecutable</key>
+    <string>Nelson</string>
+    <key>CFBundleIdentifier</key>
+    <string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>${MACOSX_DEPLOYMENT_TARGET}</string>
+  </dict>
+</plist>
